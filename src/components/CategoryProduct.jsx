@@ -27,8 +27,12 @@ function CategoryProduct({ title, image, specs, features, price, stock }) {
         <div className='category-product-info'>
           <h3>Features</h3>
           <ul>
-            {features?.map((f) => {
-              return <li className='category-product-list-item'>{f}</li>;
+            {features?.map((f, i) => {
+              return (
+                <li key={`featurer${i}`} className='category-product-list-item'>
+                  {f}
+                </li>
+              );
             })}
           </ul>
         </div>
