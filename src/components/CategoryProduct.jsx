@@ -1,9 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function CategoryProduct({ title, image, specs, features, price, stock }) {
+function CategoryProduct({ id, title, image, specs, features, price, stock }) {
   return (
     <article>
-      <div className='category-product-title'>{title}</div>
+      <div className='category-product-title'>
+        <Link to={`products/${id}`}>{title}</Link>
+      </div>
 
       <figure>
         <div className='category-product-image-container'>
