@@ -1,13 +1,18 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
+
 import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { getProductById } from '../fetcher';
 
-function ProductDetails() {
-  const [product, setProduct] = useState({ errorMessage: '', data: {} });
+const ProductDetails = () => {
+  const [product, setProduct] = React.useState({
+    errorMessage: '',
+    data: {},
+  });
   const { productId } = useParams();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchData = async () => {
       const responseObject = await getProductById(productId);
       setProduct(responseObject);
@@ -15,63 +20,157 @@ function ProductDetails() {
     fetchData();
   }, [productId]);
 
+  const createMarkup = () => {
+    return { __html: product.data?.description };
+  };
+
   return (
-    <article>
-      <div className='category-product-title'>{product.data.title}</div>
+    <ProductInfoArticle>
+      <ProductTitle>{product.data.title}</ProductTitle>
 
       <figure>
-        <div className='category-product-image-container'>
-          <img
-            src={`./assets/${product.data.image}`}
+        <ProductImageContainer>
+          <ProductImage
+            src={`/assets/${product.data.image}`}
             alt={product.data.title}
           />
-        </div>
+        </ProductImageContainer>
       </figure>
 
       <aside>
-        <div className='category-product-info'>
-          <h3>Dimensions</h3>
+        <ProductInfo>
+          <ProductInfoHeader>Dimensions</ProductInfoHeader>
           <label>{product.data.specs?.dimensions}</label>
-        </div>
+        </ProductInfo>
 
         {product.data.specs?.capacity && (
-          <div className='category-product-info'>
-            <h3>Capacity</h3>
+          <ProductInfo>
+            <ProductInfoHeader>Capacity</ProductInfoHeader>
             <label>{product.data.specs?.capacity}</label>
-          </div>
+          </ProductInfo>
         )}
 
-        <div className='category-product-info'>
-          <h3>Features</h3>
+        <ProductInfo>
+          <ProductInfoHeader>Features</ProductInfoHeader>
           <ul>
             {product.data.features?.map((f, i) => {
               return (
-                <li key={`featurer${i}`} className='category-product-list-item'>
+                <ProductInfoListItem key={`feature${i}`}>
                   {f}
-                </li>
+                </ProductInfoListItem>
               );
             })}
           </ul>
-        </div>
+        </ProductInfo>
       </aside>
 
       <aside>
-        <div className='category-product-finance-price'>
-          &euro;{product.data.price}
-        </div>
-        <div className='category-product-info-stock'>
-          <label>Stock Level: {product.data.stock}</label>
-          <label>FREE Delivery</label>
-        </div>
+        <ProductInfoFinancePrice>
+          &pound;{product.data.price}
+        </ProductInfoFinancePrice>
 
-        <div className='category-product-action'>
-          <button>Add to basket</button>
-        </div>
+        <ProductInfoStock>
+          <ProductInfoStockLabel>
+            Stock Level: {product.data.stock}
+          </ProductInfoStockLabel>
+          <ProductInfoStockLabel>FREE Delivery</ProductInfoStockLabel>
+        </ProductInfoStock>
+
+        <ProductInfoAction>
+          <ProductInfoActionButton>Add to Basket</ProductInfoActionButton>
+        </ProductInfoAction>
       </aside>
 
-      <div>{product.data?.description}</div>
-    </article>
+      <ProductInfoDescription
+        dangerouslySetInnerHTML={createMarkup()}
+      ></ProductInfoDescription>
+    </ProductInfoArticle>
   );
-}
+};
 
 export default ProductDetails;
+
+const ProductInfoArticle = styled.article`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 0.25fr 1fr 0.25fr;
+  column-gap: 20px;
+`;
+
+const ProductInfoDescription = styled.div`
+  grid-column: 1 / span 3;
+`;
+
+const ProductTitle = styled.div`
+  grid-column: 1 / span 3;
+  color: darkslategray;
+  font-weight: bold;
+  font-size: 1.5em;
+  padding-left: 10px;
+`;
+
+const ProductImageContainer = styled.div`
+  padding: 10px;
+  width: 60%;
+`;
+
+const ProductImage = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const ProductInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ProductInfoHeader = styled.h3`
+  color: darkslategray;
+  font-size: 1em;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 5px;
+`;
+
+const ProductInfoListItem = styled.li`
+  padding-top: 5px;
+`;
+
+const ProductInfoStock = styled.div`
+  padding-left: 10px;
+  margin-top: 20px;
+  padding-top: 10px;
+  background-color: lightgrey;
+  height: 20%;
+  width: 30%;
+  border-radius: 5px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ProductInfoStockLabel = styled.label`
+  padding-bottom: 5px;
+`;
+
+const ProductInfoAction = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ProductInfoActionButton = styled.button`
+  width: 160px;
+  height: 30px;
+  border-radius: 10px;
+  margin-top: 20px;
+  background-color: lightgray;
+  border: solid 1px slategrey;
+  font-weight: bold;
+`;
+
+const ProductInfoFinancePrice = styled.div`
+  color: darkslategray;
+  font-size: 2em;
+  font-weight: bold;
+  padding-top: 10px;
+`;

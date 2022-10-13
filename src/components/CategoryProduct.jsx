@@ -12,7 +12,7 @@ function CategoryProduct({ id, title, image, specs, features, price, stock }) {
 
       <figure>
         <div className='category-product-image-container'>
-          <img src={`./assets/${image}`} alt='{title}' />
+          <img src={`/assets/${image}`} alt='{title}' />
         </div>
       </figure>
 
