@@ -127,7 +127,10 @@ function Checkout() {
           Cancel
         </button>
 
-        <button className='checkout-confirmed' disabled={disabled}>
+        <button
+          className='checkout-confirmed'
+          onClick={() => navigate('/orderconfirmation')}
+        >
           Confirm Order
         </button>
       </div>
