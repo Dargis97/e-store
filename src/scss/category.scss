@@ -32,6 +32,7 @@ header a {
 
 #search {
   display: flex;
+  margin-left: 50px;
 }
 
 #search input {
@@ -41,7 +42,7 @@ header a {
 }
 
 #headerHomeIcon {
-  justify-self: start;
+  display: flex;
 }
 
 #headerTitle {
@@ -111,5 +112,9 @@ footer a {
   }
   nav {
     min-height: auto;
+  }
+  #search {
+    display: block;
+    margin: auto;
   }
 }

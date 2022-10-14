@@ -4,6 +4,8 @@ import { Link, Outlet } from 'react-router-dom';
 
 import { HomeIcon, CartIcon } from './icons';
 
+import Search from './Search';
+
 function Layout({ categories }) {
   const renderCategories = () => {
     return categories.data.map((c) => (
@@ -20,6 +22,7 @@ function Layout({ categories }) {
           <Link to={'/'}>
             <HomeIcon width={40} />
           </Link>
+          <Search />
         </div>
         <div id='headerTitle'>My Store</div>
         <div id='headerCartIcon'>

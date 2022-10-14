@@ -11,6 +11,7 @@ import Layout from './components/Layout';
 import { getCategories } from './fetcher';
 import Home from './components/Home';
 import OrderConfirmation from './components/OrderConfirmation';
+import SearchResults from './components/SearchResults';
 
 function App() {
   const [categories, setCategories] = useState({ errorMessage: '', data: [] });
@@ -32,6 +33,7 @@ function App() {
             <Route path='basket' element={<Basket />} />
             <Route path='checkout' element={<Checkout />} />
             <Route path='orderconfirmation' element={<OrderConfirmation />} />
+            <Route path='search' element={<SearchResults />} />
             <Route path='products/:productId' element={<ProductDetails />} />
             <Route path='categories/:categoryId' element={<Category />} />
           </Route>
