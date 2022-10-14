@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Link, Outlet } from 'react-router-dom';
 
+import { HomeIcon, CartIcon } from './icons';
+
 function Layout({ categories }) {
   const renderCategories = () => {
     return categories.data.map((c) => (
@@ -14,7 +16,17 @@ function Layout({ categories }) {
   return (
     <>
       <header>
-        <Link to={'/'}>My Store</Link>
+        <div id='headerHomeIcon'>
+          <Link to={'/'}>
+            <HomeIcon width={40} />
+          </Link>
+        </div>
+        <div id='headerTitle'>My Store</div>
+        <div id='headerCartIcon'>
+          <Link to={'/basket'}>
+            <CartIcon width={40} />
+          </Link>
+        </div>
       </header>
       <section>
         <nav>
