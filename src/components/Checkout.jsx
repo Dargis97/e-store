@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 function Checkout() {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ function Checkout() {
         {/* Row 6 */}
         <div className='checkout-table'>
           <label>Name</label>
-          <input
+          <CheckoutInput
             type='text'
             name='name'
             invalid={showError('name')}
@@ -79,7 +80,7 @@ function Checkout() {
             placeholder='Enter name'
           />
           <label>Email</label>
-          <input
+          <CheckoutInput
             type='text'
             name='email'
             invalid={showError('email')}
@@ -112,7 +113,7 @@ function Checkout() {
           <label>Shipping Address</label>
 
           <div className='checkout-adress'>
-            <input
+            <CheckoutInput
               type='text'
               name='shippingAddress1'
               invalid={showError('shippingAddress1')}
@@ -127,10 +128,7 @@ function Checkout() {
           Cancel
         </button>
 
-        <button
-          className='checkout-confirmed'
-          onClick={() => navigate('/orderconfirmation')}
-        >
+        <button className='checkout-confirmed' disabled={disabled}>
           Confirm Order
         </button>
       </div>
@@ -139,3 +137,15 @@ function Checkout() {
 }
 
 export default Checkout;
+
+const CheckoutInput = styled.input`
+  border-width: 1px;
+  border-style: solid;
+
+  ${(props) =>
+    props.invalid &&
+    `
+        border-color: red;
+        border-width: 3px;
+    `}
+`;
